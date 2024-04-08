@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer</title>
+</head>
+<body>
+    <h1>Timer</h1>
+    <p id="timer">00:00:00</p>
+
+    <script>
+        let timerInterval;
+        let seconds = 0;
+        let isPaused = false;
+
+        function formatTime(seconds) {
+            let hrs = Math.floor(seconds / 3600);
+            let mins = Math.floor((seconds % 3600) / 60);
+            let secs = seconds % 60;
+
+            hrs = hrs < 10 ? "0" + hrs : hrs;
+            mins = mins < 10 ? "0" + mins : mins;
+            secs = secs < 10 ? "0" + secs : secs;
+
+            return hrs + ":" + mins + ":" + secs;
+        }
+
+        function startTimer() {
+            if (!timerInterval || isPaused) {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(function () {
+                    seconds++;
+                    document.getElementById("timer").innerText = formatTime(seconds);
+                }, 1000); 
+                isPaused = false;
+            } else {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(function () {
+                    seconds++;
+                    document.getElementById("timer").innerText = formatTime(seconds);
+                }, 1000); 
+                isPaused = true;
+            }
+           
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isPaused = true;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            seconds = 0;
+            document.getElementById("timer").innerText = formatTime(seconds);
+            isPaused = false;
+        }
+    </script>
+
+    <button onclick="startTimer()">Start</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="stopTimer()">Stop</button>
+</body>
+</html>
